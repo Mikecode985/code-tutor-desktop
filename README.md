@@ -16,6 +16,7 @@
   <img src="https://img.shields.io/badge/Windows-桌面版-0078d4?style=flat-square" alt="桌面版">
   <img src="https://img.shields.io/badge/license-MIT-34c759?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/tests-476%20passing-34c759?style=flat-square" alt="Tests">
+  <a href="https://github.com/Mikecode985/code-tutor-desktop/actions/workflows/ci.yml"><img src="https://github.com/Mikecode985/code-tutor-desktop/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
 </p>
 
 <p align="center">
