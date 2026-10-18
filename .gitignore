@@ -1,0 +1,25 @@
+# 依赖
+node_modules/
+desktop/node_modules/
+desktop/.cache/
+tests/node_modules/
+tests/package-lock.json
+
+# 构建产物（103MB 安装包不入库；用 npm run bundle 现场生成）
+desktop/dist/
+desktop/app/
+
+# 本地预览图（截图已归档到 docs/screenshots/）
+preview-*.png
+
+# 部署临时目录
+deploy-site/
+deploy/
+.npmcache/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

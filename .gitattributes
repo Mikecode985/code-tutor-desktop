@@ -1,0 +1,14 @@
+# 统一换行符，避免 Windows/Linux 混用产生无意义的 diff
+* text=auto eol=lf
+
+# Windows 脚本必须是 CRLF（cmd.exe / PowerShell 对 LF 的兼容性差）
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+*.bat   text eol=crlf
+*.nsi   text eol=crlf
+
+# 二进制：不做换行转换
+*.ico   binary
+*.png   binary
+*.exe   binary
+*.zip   binary

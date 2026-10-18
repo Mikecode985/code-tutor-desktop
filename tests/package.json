@@ -1,0 +1,15 @@
+{
+  "name": "code-tutor-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "CodeTutor 自动化测试（不含桌面版 Electron 依赖）",
+  "scripts": {
+    "test": "node syntax-check.mjs && node worker.test.mjs && node alt-deploy.test.mjs",
+    "test:e2e": "node e2e.mjs",
+    "test:syntax": "node syntax-check.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0"
+  }
+}

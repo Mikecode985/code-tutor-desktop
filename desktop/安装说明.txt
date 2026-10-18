@@ -1,0 +1,25 @@
+﻿CodeTutor 编程学习助手 · 桌面版 1.0.0
+
+【怎么打开】
+  · 桌面上的「CodeTutor 编程学习助手」图标
+  · 或开始菜单 → CodeTutor → CodeTutor 编程学习助手
+
+【第一次使用要做什么】
+  1. 打开软件 → 点顶部「API 设置」
+  2. 选服务商（DeepSeek 或 通义千问），填你自己的 API Key
+  3. 连接方式建议选「直连服务商（最快）」
+     · 通义千问：模型名称填 qwen-plus，视觉模型填 qwen-vl-max
+     · DeepSeek：模型名称填 deepseek-chat（不支持图片识别，扫描版 PDF 会自动改用本地 OCR）
+  4. 点「测试连接（含代理自检）」确认可用
+
+【数据在哪】
+  · 对话历史 / 学习进度 / 掌握度：%APPDATA%\CodeTutor（本机，不上传）
+  · API Key：只在内存里，关闭软件即清除，绝不落盘
+
+【卸载】
+  · 开始菜单 → CodeTutor → 卸载 CodeTutor 编程学习助手
+  · 或 设置 → 应用 → 已安装的应用 → CodeTutor
+
+【联网说明】
+  · 界面与编辑器完全离线可用
+  · 需要联网的只有：AI 请求、PDF 阅读（在线加载 pdf.js）、本地 OCR 首次下载语言包

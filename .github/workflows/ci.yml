@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ── 静态检查 + 代理单元测试：不需要浏览器、不需要网络 ──
+  checks:
+    name: 语法检查 / 代理单元测试
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 内联脚本与代理语法检查
+        run: node tests/syntax-check.mjs
+
+      - name: 代理（Cloudflare Worker）单元测试
+        run: node tests/worker.test.mjs
+
+      - name: Pages Function / 本机代理端到端
+        run: node tests/alt-deploy.test.mjs
+
+  # ── 前端端到端：jsdom 里加载 index.html 并断言 137 项 ──
+  e2e:
+    name: 前端端到端（jsdom）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 安装测试依赖
+        working-directory: tests
+        run: npm install --no-audit --no-fund
+
+      - name: 运行 e2e（137 项断言）
+        working-directory: tests
+        run: node e2e.mjs
+
+  # ── 桌面版工程自洽性（不启动 Electron，不需要 Windows） ──
+  desktop:
+    name: 桌面版工程检查
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 检查桌面工程关键文件与脚本编码
+        run: node tests/desktop-ci-check.mjs

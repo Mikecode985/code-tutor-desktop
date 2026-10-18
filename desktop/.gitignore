@@ -1,0 +1,5 @@
+# 依赖与构建产物（不入库；103MB 的安装包也放不进 Git）
+node_modules/
+app/
+dist/
+.cache/

@@ -1,0 +1,71 @@
+{
+  "name": "codetutor-desktop",
+  "productName": "CodeTutor 编程学习助手",
+  "version": "1.0.0",
+  "description": "多语言编程学习助手（Python / C / C++）桌面版：AI 对话、代码批改、练习出题、知识点、文档阅读器",
+  "author": {
+    "name": "Mikecode985",
+    "email": "Mikecode985@users.noreply.github.com"
+  },
+  "license": "MIT",
+  "main": "main.js",
+  "scripts": {
+    "sync": "node scripts/sync.js",
+    "start": "node scripts/sync.js && electron .",
+    "smoke": "node scripts/sync.js && electron . --smoke",
+    "dist": "node scripts/sync.js && electron-builder --win",
+    "dist:portable": "node scripts/sync.js && electron-builder --win portable",
+    "bundle": "node scripts/make-bundle.js",
+    "bundle:fast": "node scripts/make-bundle.js --fast",
+    "check": "node ../tests/desktop-package.mjs"
+  },
+  "devDependencies": {
+    "electron": "31.7.7",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "com.mikecode985.codetutor",
+    "productName": "CodeTutor",
+    "copyright": "Copyright © 2026 Mikecode985",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "app/**/*",
+      "build/icon.ico"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "CodeTutor-${version}-${arch}.${ext}",
+      "publisherName": "Mikecode985"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowElevation": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "CodeTutor 编程学习助手",
+      "runAfterFinish": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "CodeTutor-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "CodeTutor-Portable-${version}.${ext}"
+    },
+    "electronDist": "node_modules/electron/dist"
+  }
+}
