@@ -20,9 +20,15 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Mikecode985/code-tutor-desktop/releases/latest"><img src="https://img.shields.io/badge/⬇_下载_Windows_桌面版-2f6d63?style=for-the-badge&logo=windows11&logoColor=white" alt="下载 Windows 桌面版"></a>
+  <a href="https://github.com/Mikecode985/code-tutor-desktop/releases/download/v1.0.0/CodeTutor-1.0.0-win64-setup.zip"><img src="https://img.shields.io/badge/⬇_直接下载_Windows_桌面版-2f6d63?style=for-the-badge&logo=windows11&logoColor=white" alt="直接下载 Windows 桌面版（一键安装）"></a>
   &nbsp;
-  <a href="https://code-tutor-site.pages.dev"><img src="https://img.shields.io/badge/打开_在线版-5fb3a1?style=for-the-badge&logo=googlechrome&logoColor=white" alt="打开在线版"></a>
+  <a href="https://github.com/Mikecode985/code-tutor-desktop/releases/download/v1.0.0/CodeTutor-1.0.0-win64-portable.zip"><img src="https://img.shields.io/badge/绿色免安装版-下载_zip-5fb3a1?style=for-the-badge&logo=7zip&logoColor=white" alt="下载免安装版"></a>
+  &nbsp;
+  <a href="https://code-tutor-site.pages.dev"><img src="https://img.shields.io/badge/打开_在线版-f38020?style=for-the-badge&logo=googlechrome&logoColor=white" alt="打开在线版"></a>
+</p>
+
+<p align="center">
+  <sub>直链指向 v1.0.0 的 Release 资产（≈103MB / 每个）。若下载 404，见 <a href="https://github.com/Mikecode985/code-tutor-desktop/releases">Releases 页</a>；也可用下方 <a href="#方式五自己构建桌面安装包开发者">源码自行构建</a>。</sub>
 </p>
 
 <p align="center">
@@ -71,7 +77,7 @@ HTML/CSS/JS，零构建、零后端），也包含把它打包成 **Windows 桌�
 | 你是谁 | 用什么 | 耗时 |
 | --- | --- | --- |
 | 只想马上试用 | [**在线版**](#方式一在线直接用零安装) | 10 秒 |
-| 想要一个桌面软件 | [**Windows 桌面版**](#方式二windows-桌面版推荐日常使用) | 3 分钟 |
+| 想要一个桌面软件 | [**Windows 桌面版**](#方式二windows-桌面版推荐日常使用)（[一键安装版直链](https://github.com/Mikecode985/code-tutor-desktop/releases/download/v1.0.0/CodeTutor-1.0.0-win64-setup.zip) / [免安装版直链](https://github.com/Mikecode985/code-tutor-desktop/releases/download/v1.0.0/CodeTutor-1.0.0-win64-portable.zip)） | 3 分钟 |
 | 想改代码 / 学实现 | [**本地打开网页版**](#方式三本地打开网页版改代码或离线用) | 1 分钟 |
 | 想给自己/团队部署一套 | [**部署到 Cloudflare Pages**](#方式四部署你自己的站点cloudflare-pages) | 5 分钟 |
 
@@ -98,17 +104,27 @@ HTML/CSS/JS，零构建、零后端），也包含把它打包成 **Windows 桌�
 | 权限 | **不需要管理员权限**（装到当前用户目录） |
 | 网络 | 仅 AI 功能需要；界面与编辑器离线可用 |
 
-#### 第 1 步：下载
+#### 第 1 步：下载（点一下就是文件，不用找）
 
-打开 **[Releases](https://github.com/Mikecode985/code-tutor-desktop/releases/latest)**，二选一：
+| 版本 | 大小 | 直接下载 | 说明 |
+| --- | --- | --- | --- |
+| **一键安装版**（推荐） | ≈103 MB | [**⬇ 直接下载 setup.zip**](https://github.com/Mikecode985/code-tutor-desktop/releases/download/v1.0.0/CodeTutor-1.0.0-win64-setup.zip) | 解压后双击「安装 CodeTutor.cmd」，自动建快捷方式与卸载入口 |
+| 绿色免安装版 | ≈103 MB | [⬇ 直接下载 portable.zip](https://github.com/Mikecode985/code-tutor-desktop/releases/download/v1.0.0/CodeTutor-1.0.0-win64-portable.zip) | 解压后直接双击 `CodeTutor.exe`，不写注册表 |
 
-| 文件 | 大小 | 说明 |
-| --- | --- | --- |
-| **`CodeTutor-1.0.0-win64-setup.zip`** | ≈103 MB | **推荐**：含一键安装脚本，双击就装好（桌面/开始菜单快捷方式 + 卸载入口） |
-| `CodeTutor-1.0.0-win64-portable.zip` | ≈103 MB | 绿色免安装：解压后直接双击 `CodeTutor.exe`，不写注册表 |
+命令行下载（PowerShell / curl 都行）：
 
-> **Releases 里还没有资产？** 说明发布者还没上传。你可以用 [Code → Download ZIP](https://github.com/Mikecode985/code-tutor-desktop/archive/refs/heads/main.zip)
-> 拿源码，按 [方式五](#方式五自己构建桌面安装包开发者) 自己构建一个（需要 Node.js，约 5 分钟）。
+```powershell
+# 一键安装版
+curl.exe -L -o CodeTutor-1.0.0-win64-setup.zip "https://github.com/Mikecode985/code-tutor-desktop/releases/download/v1.0.0/CodeTutor-1.0.0-win64-setup.zip"
+
+# 绿色免安装版
+curl.exe -L -o CodeTutor-1.0.0-win64-portable.zip "https://github.com/Mikecode985/code-tutor-desktop/releases/download/v1.0.0/CodeTutor-1.0.0-win64-portable.zip"
+```
+
+> **下载 404？** 说明该版本资产还没上传到 Releases。
+> 可以：① 去 [Releases 页](https://github.com/Mikecode985/code-tutor-desktop/releases) 看看有没有更新版本；
+> ② 用 [Code → Download ZIP](https://github.com/Mikecode985/code-tutor-desktop/archive/refs/heads/main.zip) 拿源码，
+> 按 [方式五](#方式五自己构建桌面安装包开发者) 自己构建（需要 Node.js，约 5 分钟）。
 
 #### 第 2 步：解压
 

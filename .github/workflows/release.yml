@@ -1,0 +1,93 @@
+name: Release（构建 Windows 安装包并发布）
+
+# 打一个 v* 标签（或在 Actions 页面手动触发）就会：
+#   1) 在 windows-latest 上构建桌面版（Electron 打包 + CodeMirror 本地化 + 压缩 + 组装一键安装包）
+#   2) 产出两个 zip 资产并自动发布到 Release
+#   3) README 里的「直接下载」直链随即生效
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: 构建并发布 ${{ github.ref_name }}
+    runs-on: windows-latest
+    timeout-minutes: 40
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: 取版本号
+        id: ver
+        shell: pwsh
+        run: |
+          $pkg = Get-Content desktop/package.json -Raw | ConvertFrom-Json
+          "version=$($pkg.version)" >> $env:GITHUB_OUTPUT
+          Write-Host "版本号: $($pkg.version)"
+
+      - name: 安装桌面版依赖
+        working-directory: desktop
+        run: npm install --no-audit --no-fund
+
+      - name: 构建（同步页面 → Electron 打包 → 压缩 → 组装一键安装包）
+        working-directory: desktop
+        run: node scripts/make-bundle.js
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+      - name: 生成发布资产
+        shell: pwsh
+        run: |
+          $ver = '${{ steps.ver.outputs.version }}'
+          $bundle = 'desktop/dist/一键安装-Windows'
+
+          if (-not (Test-Path $bundle)) { throw "构建产物缺失：$bundle" }
+
+          # 1) 一键安装包（含 安装 CodeTutor.cmd / install.ps1 / payload zip / 图标 / 说明）
+          $setup = "desktop/dist/CodeTutor-$ver-win64-setup.zip"
+          Compress-Archive -Path (Join-Path $bundle '*') -DestinationPath $setup -Force -CompressionLevel Optimal
+
+          # 2) 绿色免安装版（就是 payload 本身，解压后双击 CodeTutor.exe）
+          $src = Get-ChildItem $bundle -Filter 'CodeTutor-*-win64.zip' | Select-Object -First 1
+          if (-not $src) { throw "找不到 payload zip" }
+          $port = "desktop/dist/CodeTutor-$ver-win64-portable.zip"
+          Copy-Item $src.FullName $port -Force
+
+          foreach ($f in @($setup, $port)) {
+            $mb = [math]::Round((Get-Item $f).Length / 1MB, 1)
+            Write-Host "  $f ($mb MB)"
+            if ($mb -lt 50) { throw "资产体积异常（<50MB），可能是构建失败：$f" }
+          }
+
+      - name: 发布到 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: CodeTutor 编程学习助手 ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          body_path: docs/RELEASE_NOTES_v1.0.0.md
+          draft: false
+          prerelease: false
+          fail_on_unmatched_files: true
+          files: |
+            desktop/dist/CodeTutor-${{ steps.ver.outputs.version }}-win64-setup.zip
+            desktop/dist/CodeTutor-${{ steps.ver.outputs.version }}-win64-portable.zip
+
+      - name: 汇总
+        shell: pwsh
+        run: |
+          $ver = '${{ steps.ver.outputs.version }}'
+          Write-Host ""
+          Write-Host "直链（README 里用的就是这两个）："
+          Write-Host "  https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/CodeTutor-$ver-win64-setup.zip"
+          Write-Host "  https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/CodeTutor-$ver-win64-portable.zip"
