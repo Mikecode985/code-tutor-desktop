@@ -1,25 +1,55 @@
-﻿CodeTutor 编程学习助手 · 桌面版 1.0.0
+﻿CodeTutor 编程学习助手 · Windows 桌面版 1.0.0
+================================================
 
 【怎么打开】
-  · 桌面上的「CodeTutor 编程学习助手」图标
-  · 或开始菜单 → CodeTutor → CodeTutor 编程学习助手
+  1. 桌面上的「CodeTutor 编程学习助手」图标
+  2. 或：开始菜单 → CodeTutor → CodeTutor 编程学习助手
 
-【第一次使用要做什么】
+【第一次使用要做什么（约 30 秒）】
   1. 打开软件 → 点顶部「API 设置」
-  2. 选服务商（DeepSeek 或 通义千问），填你自己的 API Key
-  3. 连接方式建议选「直连服务商（最快）」
-     · 通义千问：模型名称填 qwen-plus，视觉模型填 qwen-vl-max
-     · DeepSeek：模型名称填 deepseek-chat（不支持图片识别，扫描版 PDF 会自动改用本地 OCR）
-  4. 点「测试连接（含代理自检）」确认可用
+  2. 选服务商（通义千问 / DeepSeek），填入你自己的 API Key
+  3. 填模型：
+       · 通义千问：模型名称 = qwen-plus ，视觉模型 = qwen-vl-max
+       · DeepSeek  ：模型名称 = deepseek-chat（不支持图片，扫描版 PDF 会自动改用本地 OCR）
+  4. 连接方式选「直连服务商（最快）」
+  5. 点「测试连接（含代理自检）」，两步都是绿色 ✔ 就可以用了
 
-【数据在哪】
-  · 对话历史 / 学习进度 / 掌握度：%APPDATA%\CodeTutor（本机，不上传）
-  · API Key：只在内存里，关闭软件即清除，绝不落盘
+【装到哪了】
+  程序目录：%LOCALAPPDATA%\Programs\CodeTutor
+  学习数据：%APPDATA%\CodeTutor        （对话历史 / 学习进度 / 掌握度，可用「学习进度」页导出 JSON 备份）
+  API Key ：只在内存中，关闭软件即清除，不写任何文件
 
-【卸载】
+【怎么卸载】
   · 开始菜单 → CodeTutor → 卸载 CodeTutor 编程学习助手
-  · 或 设置 → 应用 → 已安装的应用 → CodeTutor
+  · 或：设置 → 应用 → 已安装的应用 → 找到 CodeTutor → 卸载
+  卸载时会问「是否同时删除学习数据」：选「否」则保留，重装后可继续用。
+
+【怎么升级】
+  下载新版本 → 重新双击一次「安装 CodeTutor.cmd」即可覆盖安装，学习数据自动保留。
 
 【联网说明】
-  · 界面与编辑器完全离线可用
-  · 需要联网的只有：AI 请求、PDF 阅读（在线加载 pdf.js）、本地 OCR 首次下载语言包
+  · 界面、编辑器、皮肤完全离线可用
+  · 需要联网的只有三件事：AI 请求 / 阅读 PDF（在线加载 pdf.js）/ 本地 OCR 首次下载语言包
+
+【安装时遇到问题】
+  ① 出现「Windows 已保护你的电脑」（SmartScreen）
+     → 点「更多信息」→「仍要运行」。安装包未做代码签名，属正常提示。
+
+  ② 窗口一闪而过，或提示「无法加载脚本，因为在此系统上禁止运行脚本」
+     → PowerShell 执行策略在拦。用这条命令跑（不修改系统设置）：
+       powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
+
+  ③ 杀毒软件报毒
+     → 安装逻辑只做：解压 zip → 复制到用户目录 → 建 2 个快捷方式 → 写 HKCU 一个卸载项 → 启动。
+       没有网络请求、没有提权、不碰系统目录。可先打开 install.ps1 审查，或改用免安装版。
+
+  ④ 装完双击没反应
+     → 先用免安装版解压后双击 CodeTutor.exe 验证程序本身；
+       能开说明是快捷方式问题，重新双击安装脚本重建即可。
+
+【免安装版】
+  如果想绿色使用：下载 CodeTutor-1.0.0-win64-portable.zip → 解压 → 直接双击 CodeTutor.exe
+  （不写注册表、不建快捷方式；数据仍存在 %APPDATA%\CodeTutor）
+
+项目地址：https://github.com/Mikecode985/code-tutor-desktop
+开源协议：MIT

@@ -20,6 +20,12 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/Mikecode985/code-tutor-desktop/releases/latest"><img src="https://img.shields.io/badge/⬇_下载_Windows_桌面版-2f6d63?style=for-the-badge&logo=windows11&logoColor=white" alt="下载 Windows 桌面版"></a>
+  &nbsp;
+  <a href="https://code-tutor-site.pages.dev"><img src="https://img.shields.io/badge/打开_在线版-5fb3a1?style=for-the-badge&logo=googlechrome&logoColor=white" alt="打开在线版"></a>
+</p>
+
+<p align="center">
   <img src="docs/screenshots/00-hero.png" width="820" alt="首页">
 </p>
 
@@ -58,48 +64,223 @@ HTML/CSS/JS，零构建、零后端），也包含把它打包成 **Windows 桌�
 - **UI 遵循 Apple HIG**：系统字体、hairline 分隔线、分组卡片、玻璃拟态、单一强调色、SF Symbols 风格图标（21 个内联 SVG）
 - **移动端**：≤760px 自动切换底部标签栏，图表与编辑器都做了触摸适配
 
-## 🚀 快速开始
+## 🚀 下载与安装
 
-### 方式一：直接用线上版
+四选一，按你的情况挑：
 
-打开 <https://code-tutor-site.pages.dev> → 【API 设置】填自己的 Key → 开始用。
-（线上版已部署同源 `/api/chat` 代理，访客零配置）
+| 你是谁 | 用什么 | 耗时 |
+| --- | --- | --- |
+| 只想马上试用 | [**在线版**](#方式一在线直接用零安装) | 10 秒 |
+| 想要一个桌面软件 | [**Windows 桌面版**](#方式二windows-桌面版推荐日常使用) | 3 分钟 |
+| 想改代码 / 学实现 | [**本地打开网页版**](#方式三本地打开网页版改代码或离线用) | 1 分钟 |
+| 想给自己/团队部署一套 | [**部署到 Cloudflare Pages**](#方式四部署你自己的站点cloudflare-pages) | 5 分钟 |
 
-### 方式二：本地打开
+---
 
-```bash
-git clone https://github.com/Mikecode985/code-tutor-site.git
-cd code-tutor-site
-# 双击 index.html，或任意静态服务器：
-npx serve .
+### 方式一：在线直接用（零安装）
+
+打开 <https://code-tutor-site.pages.dev> → 顶部【API 设置】填自己的 Key → 开始用。
+
+线上版已部署同源代理（`/api/chat`），**访客零配置**，只要能上网就能用，手机/平板也可以。
+
+---
+
+### 方式二：Windows 桌面版（推荐日常使用）
+
+装完就是一个独立软件，**离线也能打开**（只有 AI 请求、PDF、OCR 首次语言包需要联网）。
+
+#### 系统要求
+
+| 项 | 要求 |
+| --- | --- |
+| 系统 | Windows 10 / 11（64 位） |
+| 磁盘 | 约 260 MB（安装后） |
+| 权限 | **不需要管理员权限**（装到当前用户目录） |
+| 网络 | 仅 AI 功能需要；界面与编辑器离线可用 |
+
+#### 第 1 步：下载
+
+打开 **[Releases](https://github.com/Mikecode985/code-tutor-desktop/releases/latest)**，二选一：
+
+| 文件 | 大小 | 说明 |
+| --- | --- | --- |
+| **`CodeTutor-1.0.0-win64-setup.zip`** | ≈103 MB | **推荐**：含一键安装脚本，双击就装好（桌面/开始菜单快捷方式 + 卸载入口） |
+| `CodeTutor-1.0.0-win64-portable.zip` | ≈103 MB | 绿色免安装：解压后直接双击 `CodeTutor.exe`，不写注册表 |
+
+> **Releases 里还没有资产？** 说明发布者还没上传。你可以用 [Code → Download ZIP](https://github.com/Mikecode985/code-tutor-desktop/archive/refs/heads/main.zip)
+> 拿源码，按 [方式五](#方式五自己构建桌面安装包开发者) 自己构建一个（需要 Node.js，约 5 分钟）。
+
+#### 第 2 步：解压
+
+对下载的 zip 右键 → **全部解压缩**（不要直接在压缩包窗口里双击运行，脚本会找不到同级文件）。
+
+解压后目录里应该有这 5 个文件：
+
+```
+安装 CodeTutor.cmd      ← 双击这个
+install.ps1
+CodeTutor-1.0.0-win64.zip
+icon.ico
+安装说明.txt
 ```
 
-> 本地 `file://` 打开时没有同源代理，请到【API 设置】把连接方式切成**「直连服务商」**。
+#### 第 3 步：双击「安装 CodeTutor.cmd」
 
-### 方式三：部署你自己的站点（Cloudflare Pages）
+会弹出一个 PowerShell 窗口，自动完成 6 个步骤（全程约 20 秒）：
+
+1. 关闭正在运行的旧版本
+2. 解压到 `%LOCALAPPDATA%\Programs\CodeTutor`
+3. 写入图标、卸载脚本、安装说明
+4. 创建**桌面快捷方式** + **开始菜单**（程序 / 卸载）
+5. 注册到「设置 → 应用 → 已安装的应用」
+6. **自动启动**程序
+
+看到绿色的 `✔ 安装完成` 后按回车关闭窗口即可。桌面上会出现「**CodeTutor 编程学习助手**」图标。
+
+#### 第 4 步：第一次配置（约 30 秒）
+
+| 步骤 | 操作 |
+| --- | --- |
+| 1 | 打开软件 → 顶部 **【API 设置】** |
+| 2 | 选服务商（通义千问 / DeepSeek），填**你自己的** API Key |
+| 3 | 模型名称：通义千问填 `qwen-plus`，DeepSeek 填 `deepseek-chat`；**视觉模型**填 `qwen-vl-max` |
+| 4 | 连接方式选 **「直连服务商（最快）」** |
+| 5 | 点 **「测试连接（含代理自检）」**，两步都显示 ✔ 即可 |
+
+#### 装到哪了 / 数据在哪 / 怎么卸载
+
+| 项 | 位置 |
+| --- | --- |
+| 程序本体 | `%LOCALAPPDATA%\Programs\CodeTutor` |
+| 学习数据（对话、进度、掌握度） | `%APPDATA%\CodeTutor` ← **卸载时可选保留** |
+| 卸载 | 开始菜单 → CodeTutor → **卸载 CodeTutor 编程学习助手**；或 设置 → 应用 → 找到它点卸载 |
+| API Key | 只在运行时内存里，**关闭软件即清除**，不写入任何文件 |
+
+**升级**：下载新版本 → 再双击一次「安装 CodeTutor.cmd」即可覆盖安装，学习数据自动保留。
+
+#### 安装时可能遇到的 4 个问题
+
+<details>
+<summary><b>① 提示「Windows 已保护你的电脑」/ SmartScreen 拦截</b></summary>
+
+安装包没有购买代码签名证书，Windows 会警示。点 **「更多信息」→「仍要运行」** 即可。
+（本项目是 MIT 开源，全部安装逻辑就在 `desktop/installer/install.ps1` 里，可以自己先审查一遍再运行。）
+</details>
+
+<details>
+<summary><b>② 双击后窗口一闪而过，或提示「无法加载脚本，因为在此系统上禁止运行脚本」</b></summary>
+
+这是 PowerShell 执行策略（默认 Restricted）在拦脚本。任选一种：
+
+```powershell
+# 方式 A：用带 Bypass 的命令跑（不修改系统策略，推荐）
+powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
+
+# 方式 B：只为当前用户放开（可随时改回）
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+</details>
+
+<details>
+<summary><b>③ 杀毒软件报毒 / 拦截</b></summary>
+
+常见于「未签名 + 会创建快捷方式 + 写注册表」的安装脚本。安装脚本做的事只有：
+解压 zip → 复制文件到用户目录 → 用 `WScript.Shell` 建两个快捷方式 → 写 `HKCU` 下一个卸载项 → 启动程序。
+全部代码见 `desktop/installer/install.ps1`（190 行），**没有网络请求、没有提权、不碰系统目录**。
+确认无误后把该目录加入信任，或改用免安装版（解压双击 `CodeTutor.exe`）。
+</details>
+
+<details>
+<summary><b>④ 装完双击图标没反应 / 秒退</b></summary>
+
+1. 先确认安装目录里 `CodeTutor.exe` 存在（约 172MB）；
+2. 用免安装版 `CodeTutor-1.0.0-win64-portable.zip` 解压后双击 `CodeTutor.exe` 试试，能开说明是快捷方式的问题（重新双击安装脚本即可重建）；
+3. 还是打不开：`Win+R` 输入 `%APPDATA%\CodeTutor` 看有没有日志；或在本仓库提 Issue 并附上「设置 → 应用」里显示的版本号。
+</details>
+
+#### 下载完整性校验（可选）
+
+<details>
+<summary>展开查看 SHA-256（构建于 2026-10-18，v1.0.0）</summary>
+
+```text
+3992B6E0CE433394990F1605635A374BB02A34F87C02748D194F216EE4C4C6D3  CodeTutor-1.0.0-win64-setup.zip
+CE7EDFBA04F3887F776B48156A0317A4738F457949A11086596A18A27DFAC7C4  CodeTutor-1.0.0-win64-portable.zip
+```
+
+校验命令（PowerShell）：
+
+```powershell
+Get-FileHash .\CodeTutor-1.0.0-win64-setup.zip -Algorithm SHA256
+```
+</details>
+
+---
+
+### 方式三：本地打开网页版（改代码或离线用）
+
+```bash
+# 1) 拿到源码
+git clone https://github.com/Mikecode985/code-tutor-desktop.git
+#    或者：GitHub 页面 Code → Download ZIP，解压
+
+# 2) 直接双击 index.html
+#    或用任意静态服务器（推荐，避免 file:// 限制）
+cd code-tutor-desktop
+npx serve .          # 然后打开 http://localhost:3000
+```
+
+> ⚠️ 用 `file://` 双击打开时没有同源后端，请到【API 设置】把连接方式切成 **「直连服务商」**。
+> 另外 `file://` 下 CodeMirror 从 CDN 加载，**首次需要联网**；桌面版已把编辑器本地化，断网也能用。
+
+---
+
+### 方式四：部署你自己的站点（Cloudflare Pages）
 
 ```bash
 # 让 Pages 自动识别 functions/ 目录（同源代理，推荐）
 npx wrangler pages deploy . --project-name=你的项目名
 ```
 
-或直接在 Cloudflare 控制台连 GitHub 仓库，构建命令留空、输出目录填 `/`。
+也可以在 Cloudflare 控制台里连这个仓库：构建命令**留空**、输出目录填 `/`。
 
-> 想让别人也能用，请部署**你自己的** `functions/api/chat.js`；
-> 也支持自建 Worker（`cloudflare-proxy.js`）与本地代理（`local-proxy.mjs`），见 [docs/DEPLOY.md](docs/DEPLOY.md)。
+> 想让别人也能用，请部署**你自己的** `functions/api/chat.js`（别借用别人的代理跑自己的 Key）。
+> 也支持自建 Worker（`cloudflare-proxy.js`）与本机代理（`local-proxy.mjs`），见 [docs/DEPLOY.md](docs/DEPLOY.md)。
 
-### 方式四：Windows 桌面版（一键安装）
+---
+
+### 方式五：自己构建桌面安装包（开发者）
+
+需要 Node.js 18+ 与 Windows（生成的是 Windows 安装包）：
 
 ```powershell
-cd desktop
-npm install          # 首次安装 Electron 与打包工具
-npm run bundle       # 产出 dist\一键安装-Windows\ 与免安装版
+git clone https://github.com/Mikecode985/code-tutor-desktop.git
+cd code-tutor-desktop\desktop
+
+npm install            # 首次：Electron + electron-builder，约 400 个包
+npm run bundle         # 同步页面 → 打包 → 压缩 → 组装一键安装包
 ```
 
-把 `desktop/dist/一键安装-Windows/` 整个文件夹发给使用者，**双击「安装 CodeTutor.cmd」**即可：
+产物：
 
-解压到 `%LOCALAPPDATA%\Programs\CodeTutor` → 建桌面/开始菜单快捷方式 → 注册卸载入口 → 自动启动。
-**不需要管理员权限**，卸载走「设置 → 应用」。细节见 [desktop/README.md](desktop/README.md)。
+```
+desktop/dist/win-unpacked/            免安装版，双击 CodeTutor.exe 即可运行
+desktop/dist/一键安装-Windows/        一键安装包（发给别人就发这个文件夹）
+  ├─ 安装 CodeTutor.cmd
+  ├─ install.ps1
+  ├─ CodeTutor-1.0.0-win64.zip
+  ├─ icon.ico
+  └─ 安装说明.txt
+```
+
+想产出**单个 `.exe` 安装器**（而不是 zip + 脚本）也可以：
+
+```powershell
+npm run dist     # electron-builder → dist\CodeTutor-Setup-1.0.0.exe（NSIS，oneClick）
+# 或：用 NSIS 3 打开 desktop\installer\codetutor.nsi 编译
+```
+
+更多细节见 [desktop/README.md](desktop/README.md)。
 
 ## 🔑 配置 AI
 
