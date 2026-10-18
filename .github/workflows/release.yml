@@ -70,18 +70,33 @@ jobs:
             if ($mb -lt 50) { throw "资产体积异常（<50MB），可能是构建失败：$f" }
           }
 
+          # 3) 校验文件（下载者可核对，避免"Release 正文里的哈希和资产不一致"）
+          $sha = @($setup, $port) | ForEach-Object {
+            $h = (Get-FileHash $_ -Algorithm SHA256).Hash
+            "$h  $(Split-Path $_ -Leaf)"
+          }
+          $sha | Set-Content -Path 'desktop/dist/SHA256SUMS.txt' -Encoding ascii
+          $sha | ForEach-Object { Write-Host "  $_" }
+
+          # 4) Release 正文 = 发布说明 + 本次构建的真实哈希
+          $body = Get-Content 'docs/RELEASE_NOTES_v1.0.0.md' -Raw
+          $fence = [char]96 + [char]96 + [char]96
+          $body += "`n`n## 本次构建的 SHA-256（由 CI 生成）`n`n" + $fence + "text`n" + ($sha -join "`n") + "`n" + $fence + "`n"
+          $body | Set-Content -Path 'desktop/dist/RELEASE_BODY.md' -Encoding utf8
+
       - name: 发布到 Release
         uses: softprops/action-gh-release@v2
         with:
           name: CodeTutor 编程学习助手 ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
-          body_path: docs/RELEASE_NOTES_v1.0.0.md
+          body_path: desktop/dist/RELEASE_BODY.md
           draft: false
           prerelease: false
           fail_on_unmatched_files: true
           files: |
             desktop/dist/CodeTutor-${{ steps.ver.outputs.version }}-win64-setup.zip
             desktop/dist/CodeTutor-${{ steps.ver.outputs.version }}-win64-portable.zip
+            desktop/dist/SHA256SUMS.txt
 
       - name: 汇总
         shell: pwsh

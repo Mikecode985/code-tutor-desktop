@@ -11,11 +11,11 @@
 
 **系统要求**：Windows 10/11（64 位）· 磁盘约 260MB · 无需管理员权限。
 
-SHA-256：
+本 Release 的资产由 GitHub Actions 在 `windows-latest` 上现场构建，**校验值见附件 `SHA256SUMS.txt`**：
 
-```text
-3992B6E0CE433394990F1605635A374BB02A34F87C02748D194F216EE4C4C6D3  CodeTutor-1.0.0-win64-setup.zip
-CE7EDFBA04F3887F776B48156A0317A4738F457949A11086596A18A27DFAC7C4  CodeTutor-1.0.0-win64-portable.zip
+```powershell
+# 下载 SHA256SUMS.txt 后校验（PowerShell）
+Get-FileHash .\CodeTutor-1.0.0-win64-setup.zip -Algorithm SHA256
 ```
 
 不想装软件也可以直接用在线版：<https://code-tutor-site.pages.dev>

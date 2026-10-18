@@ -217,18 +217,16 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 #### 下载完整性校验（可选）
 
 <details>
-<summary>展开查看 SHA-256（构建于 2026-10-18，v1.0.0）</summary>
+<summary>怎么校验下载的文件没被篡改</summary>
 
-```text
-3992B6E0CE433394990F1605635A374BB02A34F87C02748D194F216EE4C4C6D3  CodeTutor-1.0.0-win64-setup.zip
-CE7EDFBA04F3887F776B48156A0317A4738F457949A11086596A18A27DFAC7C4  CodeTutor-1.0.0-win64-portable.zip
-```
-
-校验命令（PowerShell）：
+每个 Release 都附带 **`SHA256SUMS.txt`**（由 GitHub Actions 在构建时生成），下载后比对即可：
 
 ```powershell
 Get-FileHash .\CodeTutor-1.0.0-win64-setup.zip -Algorithm SHA256
+# 与 SHA256SUMS.txt 里对应的那一行比较
 ```
+
+也可以在 Release 页面看到每个资产的大小；本版本两个资产都是 **≈103 MB**，明显偏小说明下载不完整，重新下载即可。
 </details>
 
 ---
